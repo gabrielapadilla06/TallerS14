@@ -1,5 +1,6 @@
 package club;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 import club.Socio.Tipo;
@@ -19,7 +20,10 @@ public class Main {
             System.out.println("3. Pagar una factura.");
             System.out.println("4. Registrar un consumo en la cuenta de un socio");
             System.out.println("5. Aumentar fondos de la cuenta de un socio");
-            System.out.println("6. Salir");
+            System.out.println("6. Calcular total de consumos de socio");
+            System.out.println("7. Determinar si se puede eliminar Socio");
+            System.out.println("8. Eliminar autorizado por socio");
+            System.out.println("9. Salir");
             System.out.print("Ingrese una opcion: ");
             op = Integer.parseInt(sc.nextLine());
 
@@ -221,6 +225,59 @@ public class Main {
                 }break;
 
                 case 6:{
+                    System.out.println("\n--- TOTAL CONSUMIDO POR SOCIO ---");
+                    System.out.print("Ingrese la cédula del socio: ");
+                    String cedula = sc.nextLine();
+
+                    Socio socio = c.buscarSocio(cedula);
+                    if(socio == null){
+                        System.out.println("No existe un socio con esa cédula");
+                        break;
+                    }
+
+                    double consumo = c.calcularTotalConsumosSocio(cedula);
+                    System.out.println("Total consumido:" + consumo);
+
+                }break;
+
+                case 7:{
+                    System.out.println("\n--- DETERMINAR SI SE PUEDE ELIMINAR SOCIO ---");
+                    System.out.print("Ingrese la cédula del socio: ");
+                    String cedula = sc.nextLine();
+
+                    Socio socio = c.buscarSocio(cedula);
+                    if(socio == null){
+                        System.out.println("No existe un socio con esa cédula");
+                        break;
+                    }
+
+                    if(c.sePuedeEliminarSocio(cedula)){
+                        System.out.println("Socio se puede eliminar");
+                    } else{
+                        System.out.println("El socio no puede ser eliminado");
+                    }
+
+                } break;
+
+                case 8:{
+                    System.out.println("\n--- ELIMINAR AUTORIZADO POR SOCIO ---");
+                    System.out.print("Ingrese la cédula del socio: ");
+                    String cedula = sc.nextLine();
+
+                    Socio socio = c.buscarSocio(cedula);
+                    if(socio == null){
+                        System.out.println("No existe un socio con esa cédula");
+                        break;
+                    }
+
+                    System.out.println("Ingrese el nombre del autorizado a eliminar");
+                    String nombre = sc.nextLine();
+
+                    c.eliminarAutorizadoSocio(cedula, nombre);
+
+                }break;
+
+                case 9:{
                     System.out.println("Saliendo del sistema");
                 }break;
 
@@ -228,7 +285,7 @@ public class Main {
                     System.out.println("opcion invalida");
             }
 
-        }while(op!=6);
+        }while(op!=9);
 
         sc.close();
     }

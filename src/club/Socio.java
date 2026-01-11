@@ -312,8 +312,11 @@ public class Socio
             {
                 encontro = true;
                 autorizados.remove( i );
+                System.out.println("Autorizado eliminado exitosamente");
+                return;
             }
         }
+        System.out.println("No se encontro al autorizado");
     }
 
     /**
